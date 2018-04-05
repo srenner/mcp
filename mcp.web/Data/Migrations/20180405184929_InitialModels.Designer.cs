@@ -11,9 +11,10 @@ using System;
 namespace mcp.web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180405184929_InitialModels")]
+    partial class InitialModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,36 +70,6 @@ namespace mcp.web.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("mcp.web.Models.Project", b =>
-                {
-                    b.Property<int>("ProjectID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("VehicleID");
-
-                    b.HasKey("ProjectID");
-
-                    b.HasIndex("VehicleID");
-
-                    b.ToTable("Project");
-                });
-
-            modelBuilder.Entity("mcp.web.Models.Vehicle", b =>
-                {
-                    b.Property<int>("VehicleID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("OwnerID");
-
-                    b.HasKey("VehicleID");
-
-                    b.HasIndex("OwnerID");
-
-                    b.ToTable("Vehicle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -207,21 +178,6 @@ namespace mcp.web.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("mcp.web.Models.Project", b =>
-                {
-                    b.HasOne("mcp.web.Models.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("mcp.web.Models.Vehicle", b =>
-                {
-                    b.HasOne("mcp.web.Models.ApplicationUser", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

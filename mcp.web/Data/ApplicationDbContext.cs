@@ -15,6 +15,9 @@ namespace mcp.web.Data
         {
         }
 
+        public DbSet<Vehicle> Vehicle { get; set; }
+        public DbSet<Project> Project { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
