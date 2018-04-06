@@ -11,9 +11,10 @@ using System;
 namespace mcp.web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180406190453_ProjectDependencyFix1")]
+    partial class ProjectDependencyFix1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,8 +111,6 @@ namespace mcp.web.Data.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(500);
 
-                    b.Property<int>("ProjectStatusID");
-
                     b.Property<DateTime?>("TargetEndDate");
 
                     b.Property<DateTime?>("TargetStartDate");
@@ -119,8 +118,6 @@ namespace mcp.web.Data.Migrations
                     b.Property<int>("VehicleID");
 
                     b.HasKey("ProjectID");
-
-                    b.HasIndex("ProjectStatusID");
 
                     b.HasIndex("VehicleID");
 
@@ -360,11 +357,6 @@ namespace mcp.web.Data.Migrations
 
             modelBuilder.Entity("mcp.web.Models.Project", b =>
                 {
-                    b.HasOne("mcp.web.Models.ProjectStatus", "ProjectStatus")
-                        .WithMany()
-                        .HasForeignKey("ProjectStatusID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("mcp.web.Models.Vehicle", "Vehicle")
                         .WithMany()
                         .HasForeignKey("VehicleID")
@@ -403,7 +395,7 @@ namespace mcp.web.Data.Migrations
                     b.HasOne("mcp.web.Models.ProjectStatus", "ProjectStatus")
                         .WithMany()
                         .HasForeignKey("ProjectStatusID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("mcp.web.Models.ProjectStep", b =>

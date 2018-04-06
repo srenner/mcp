@@ -12,5 +12,8 @@ namespace mcp.web.Models
 
         public string OwnerID { get; set; }
         public ApplicationUser Owner { get; set; }
+
+        public bool IsPublic { get; set; }
+        public bool IsArchived { get; set; }
     }
 }

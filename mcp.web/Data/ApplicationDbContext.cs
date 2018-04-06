@@ -14,9 +14,14 @@ namespace mcp.web.Data
             : base(options)
         {
         }
-
-        public DbSet<Vehicle> Vehicle { get; set; }
+        public DbSet<ProductHyperlink> ProductHyperlink { get; set; }
         public DbSet<Project> Project { get; set; }
+        public DbSet<ProjectItem> ProjectItem { get; set; }
+        public DbSet<ProjectStatus> ProjectStatus { get; set; }
+        public DbSet<ProjectStatusHistory> ProjectStatusHistory { get; set; }
+        public DbSet<ProjectStep> ProjectStep { get; set; }
+        public DbSet<Vehicle> Vehicle { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -24,6 +29,16 @@ namespace mcp.web.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+            builder.Entity<Project>()
+                .HasOne(o => o.ProjectStatus)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ProjectStatusHistory>()
+                .HasOne(o => o.ProjectStatus)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

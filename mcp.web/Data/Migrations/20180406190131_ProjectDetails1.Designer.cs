@@ -11,9 +11,10 @@ using System;
 namespace mcp.web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180406190131_ProjectDetails1")]
+    partial class ProjectDetails1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,7 +111,7 @@ namespace mcp.web.Data.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(500);
 
-                    b.Property<int>("ProjectStatusID");
+                    b.Property<int?>("ProjectID1");
 
                     b.Property<DateTime?>("TargetEndDate");
 
@@ -120,7 +121,7 @@ namespace mcp.web.Data.Migrations
 
                     b.HasKey("ProjectID");
 
-                    b.HasIndex("ProjectStatusID");
+                    b.HasIndex("ProjectID1");
 
                     b.HasIndex("VehicleID");
 
@@ -360,10 +361,9 @@ namespace mcp.web.Data.Migrations
 
             modelBuilder.Entity("mcp.web.Models.Project", b =>
                 {
-                    b.HasOne("mcp.web.Models.ProjectStatus", "ProjectStatus")
-                        .WithMany()
-                        .HasForeignKey("ProjectStatusID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("mcp.web.Models.Project")
+                        .WithMany("ProjectDependencies")
+                        .HasForeignKey("ProjectID1");
 
                     b.HasOne("mcp.web.Models.Vehicle", "Vehicle")
                         .WithMany()
@@ -403,7 +403,7 @@ namespace mcp.web.Data.Migrations
                     b.HasOne("mcp.web.Models.ProjectStatus", "ProjectStatus")
                         .WithMany()
                         .HasForeignKey("ProjectStatusID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("mcp.web.Models.ProjectStep", b =>

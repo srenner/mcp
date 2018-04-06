@@ -5,6 +5,15 @@
     <UserSecretsId>aspnet-mcp.web-9EDE2FE2-E888-4FB3-9EE4-4F4C360E5EE5</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20180406183458_ProjectDetails1.cs" />
+    <Compile Remove="Data\Migrations\20180406183458_ProjectDetails1.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180406185748_ProjectDetails1.cs" />
+    <Compile Remove="Data\Migrations\20180406185748_ProjectDetails1.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180406190612_CurrentProjectStatus.cs" />
+    <Compile Remove="Data\Migrations\20180406190612_CurrentProjectStatus.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
