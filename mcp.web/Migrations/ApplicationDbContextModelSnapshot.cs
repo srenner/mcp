@@ -8,13 +8,12 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace mcp.web.Data.Migrations
+namespace mcp.web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180405185217_InitialAppModels")]
-    partial class InitialAppModels
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,24 +71,157 @@ namespace mcp.web.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("mcp.web.Models.ProductHyperlink", b =>
+                {
+                    b.Property<int>("ProductHyperlinkID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int?>("ProjectItemID");
+
+                    b.Property<string>("URL");
+
+                    b.HasKey("ProductHyperlinkID");
+
+                    b.HasIndex("ProjectItemID");
+
+                    b.ToTable("ProductHyperlink");
+                });
+
             modelBuilder.Entity("mcp.web.Models.Project", b =>
                 {
                     b.Property<int>("ProjectID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(4000);
+
+                    b.Property<bool>("IsArchived");
+
+                    b.Property<bool>("IsPublic");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500);
+
+                    b.Property<int>("ProjectStatusID");
+
+                    b.Property<DateTime?>("TargetEndDate");
+
+                    b.Property<DateTime?>("TargetStartDate");
+
                     b.Property<int>("VehicleID");
 
                     b.HasKey("ProjectID");
+
+                    b.HasIndex("ProjectStatusID");
 
                     b.HasIndex("VehicleID");
 
                     b.ToTable("Project");
                 });
 
+            modelBuilder.Entity("mcp.web.Models.ProjectItem", b =>
+                {
+                    b.Property<int>("ProjectItemID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500);
+
+                    b.Property<int?>("ProductHyperlinkID");
+
+                    b.Property<int?>("ProjectID");
+
+                    b.Property<int?>("ProjectStepID");
+
+                    b.Property<int?>("SortOrder");
+
+                    b.HasKey("ProjectItemID");
+
+                    b.HasIndex("ProductHyperlinkID");
+
+                    b.HasIndex("ProjectID");
+
+                    b.HasIndex("ProjectStepID");
+
+                    b.ToTable("ProjectItem");
+                });
+
+            modelBuilder.Entity("mcp.web.Models.ProjectStatus", b =>
+                {
+                    b.Property<int>("ProjectStatusID");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100);
+
+                    b.HasKey("ProjectStatusID");
+
+                    b.ToTable("ProjectStatus");
+                });
+
+            modelBuilder.Entity("mcp.web.Models.ProjectStatusHistory", b =>
+                {
+                    b.Property<int>("ProjectStatusHistoryID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ProjectID");
+
+                    b.Property<int>("ProjectStatusID");
+
+                    b.Property<DateTime>("StatusDate");
+
+                    b.Property<string>("StatusNote")
+                        .HasMaxLength(4000);
+
+                    b.HasKey("ProjectStatusHistoryID");
+
+                    b.HasIndex("ProjectID");
+
+                    b.HasIndex("ProjectStatusID");
+
+                    b.ToTable("ProjectStatusHistory");
+                });
+
+            modelBuilder.Entity("mcp.web.Models.ProjectStep", b =>
+                {
+                    b.Property<int>("ProjectStepID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(500);
+
+                    b.Property<int>("ProjectID");
+
+                    b.Property<int?>("StepNumber");
+
+                    b.HasKey("ProjectStepID");
+
+                    b.HasIndex("ProjectID");
+
+                    b.ToTable("ProjectStep");
+                });
+
             modelBuilder.Entity("mcp.web.Models.Vehicle", b =>
                 {
                     b.Property<int>("VehicleID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsArchived");
+
+                    b.Property<bool>("IsPublic");
 
                     b.Property<string>("Name");
 
@@ -210,11 +342,59 @@ namespace mcp.web.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("mcp.web.Models.ProductHyperlink", b =>
+                {
+                    b.HasOne("mcp.web.Models.ProjectItem")
+                        .WithMany("AlternativeProductHyperlinks")
+                        .HasForeignKey("ProjectItemID");
+                });
+
             modelBuilder.Entity("mcp.web.Models.Project", b =>
                 {
+                    b.HasOne("mcp.web.Models.ProjectStatus", "ProjectStatus")
+                        .WithMany()
+                        .HasForeignKey("ProjectStatusID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("mcp.web.Models.Vehicle", "Vehicle")
                         .WithMany()
                         .HasForeignKey("VehicleID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("mcp.web.Models.ProjectItem", b =>
+                {
+                    b.HasOne("mcp.web.Models.ProductHyperlink", "ProductHyperlink")
+                        .WithMany()
+                        .HasForeignKey("ProductHyperlinkID");
+
+                    b.HasOne("mcp.web.Models.Project")
+                        .WithMany("ProjectItems")
+                        .HasForeignKey("ProjectID");
+
+                    b.HasOne("mcp.web.Models.ProjectStep")
+                        .WithMany("ProjectStepItems")
+                        .HasForeignKey("ProjectStepID");
+                });
+
+            modelBuilder.Entity("mcp.web.Models.ProjectStatusHistory", b =>
+                {
+                    b.HasOne("mcp.web.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("mcp.web.Models.ProjectStatus", "ProjectStatus")
+                        .WithMany()
+                        .HasForeignKey("ProjectStatusID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("mcp.web.Models.ProjectStep", b =>
+                {
+                    b.HasOne("mcp.web.Models.Project", "Project")
+                        .WithMany("ProjectSteps")
+                        .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

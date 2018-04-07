@@ -12,6 +12,20 @@
     <Compile Remove="Data\Migrations\20180406185748_ProjectDetails1.Designer.cs" />
     <Compile Remove="Data\Migrations\20180406190612_CurrentProjectStatus.cs" />
     <Compile Remove="Data\Migrations\20180406190612_CurrentProjectStatus.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180406212533_status-id-fix.cs" />
+    <Compile Remove="Data\Migrations\20180406212533_status-id-fix.Designer.cs" />
+    <Compile Remove="Migrations\20180406214737_EarlyModeling.cs" />
+    <Compile Remove="Migrations\20180406214737_EarlyModeling.Designer.cs" />
+    <Compile Remove="Migrations\20180406214944_EarlyModeling.cs" />
+    <Compile Remove="Migrations\20180406214944_EarlyModeling.Designer.cs" />
+    <Compile Remove="Migrations\20180407011510_EarlyModeling.cs" />
+    <Compile Remove="Migrations\20180407011510_EarlyModeling.Designer.cs" />
+    <Compile Remove="Migrations\20180407011935_EarlyModeling.cs" />
+    <Compile Remove="Migrations\20180407011935_EarlyModeling.Designer.cs" />
+    <Compile Remove="Migrations\20180407012150_EarlyModeling.cs" />
+    <Compile Remove="Migrations\20180407012150_EarlyModeling.Designer.cs" />
+    <Compile Remove="Migrations\20180407012236_EarlyModeling.cs" />
+    <Compile Remove="Migrations\20180407012236_EarlyModeling.Designer.cs" />
   </ItemGroup>
 
 
@@ -28,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Migrations\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

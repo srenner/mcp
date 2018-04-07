@@ -23,14 +23,14 @@ namespace mcp.web.Models
         [MaxLength(4000)]
         public string Description { get; set; }
 
-        
+
         public int ProjectStatusID { get; set; }
         public ProjectStatus ProjectStatus { get; set; }
 
         public bool IsPublic { get; set; }
         public bool IsArchived { get; set; }
 
-        public List<ProjectStatus> StatusHistory { get; set; }
+        //public List<ProjectStatus> StatusHistory { get; set; }
         public List<ProjectItem> ProjectItems { get; set; }
         public List<ProjectStep> ProjectSteps { get; set; }
 

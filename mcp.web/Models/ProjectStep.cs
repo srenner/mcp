@@ -20,7 +20,6 @@ namespace mcp.web.Models
 
         public int? StepNumber { get; set; }
 
-        public List<ProjectStep> ProjectStepDependencies { get; set; }
         public List<ProjectItem> ProjectStepItems { get; set; }
     }
 }

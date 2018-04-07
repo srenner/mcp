@@ -39,6 +39,7 @@ namespace mcp.web.Data
                 .HasOne(o => o.ProjectStatus)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

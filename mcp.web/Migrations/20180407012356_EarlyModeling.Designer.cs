@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace mcp.web.Data.Migrations
+namespace mcp.web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180407012356_EarlyModeling")]
+    partial class EarlyModeling
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,17 +160,12 @@ namespace mcp.web.Data.Migrations
 
             modelBuilder.Entity("mcp.web.Models.ProjectStatus", b =>
                 {
-                    b.Property<int>("ProjectStatusID")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("ProjectStatusID");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100);
 
-                    b.Property<int?>("ProjectID");
-
                     b.HasKey("ProjectStatusID");
-
-                    b.HasIndex("ProjectID");
 
                     b.ToTable("ProjectStatus");
                 });
@@ -210,15 +206,11 @@ namespace mcp.web.Data.Migrations
 
                     b.Property<int>("ProjectID");
 
-                    b.Property<int?>("ProjectStepID1");
-
                     b.Property<int?>("StepNumber");
 
                     b.HasKey("ProjectStepID");
 
                     b.HasIndex("ProjectID");
-
-                    b.HasIndex("ProjectStepID1");
 
                     b.ToTable("ProjectStep");
                 });
@@ -386,13 +378,6 @@ namespace mcp.web.Data.Migrations
                         .HasForeignKey("ProjectStepID");
                 });
 
-            modelBuilder.Entity("mcp.web.Models.ProjectStatus", b =>
-                {
-                    b.HasOne("mcp.web.Models.Project")
-                        .WithMany("StatusHistory")
-                        .HasForeignKey("ProjectID");
-                });
-
             modelBuilder.Entity("mcp.web.Models.ProjectStatusHistory", b =>
                 {
                     b.HasOne("mcp.web.Models.Project", "Project")
@@ -412,10 +397,6 @@ namespace mcp.web.Data.Migrations
                         .WithMany("ProjectSteps")
                         .HasForeignKey("ProjectID")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("mcp.web.Models.ProjectStep")
-                        .WithMany("ProjectStepDependencies")
-                        .HasForeignKey("ProjectStepID1");
                 });
 
             modelBuilder.Entity("mcp.web.Models.Vehicle", b =>
